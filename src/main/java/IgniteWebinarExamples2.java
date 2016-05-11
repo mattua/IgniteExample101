@@ -22,18 +22,11 @@ public class IgniteWebinarExamples2 {
 
 
     // remember to restart all the nodes when running new functionality
-
-
-
-
     public static enum Scenario {
 
-        STREAM_WORDS,STREAMER_SINGLETON_SERVICE
+        STREAMER_SINGLETON_SERVICE
 
     }
-
-
-
     /*
     Streaming:
         -branching pipelines
@@ -42,9 +35,6 @@ public class IgniteWebinarExamples2 {
         -ignite streams data into ignite nodes can be subsequently queried by ignite client
 
     Spark streams one RDD at a time whereas Ignite streams each event into Ignite without any batching of that data
-
-
-
      */
 
 
@@ -52,27 +42,12 @@ public class IgniteWebinarExamples2 {
 
 
         // comment
-        Scenario s = Scenario.STREAM_WORDS;
+        Scenario s = Scenario.STREAMER_SINGLETON_SERVICE;
 
         switch (s) {
 
 
-            case STREAM_WORDS:
-
-            {
-                // in a separate class
-                StreamWords.main(null);
-
-
-                // then in a separate JVM, run the QueryWords class
-
-
-
-            }
-            break;
-
-
-            case   STREAMER_SINGLETON_SERVICE:{
+           case   STREAMER_SINGLETON_SERVICE:{
             // Prevents this node from participating
             Ignition.setClientMode(true);
 

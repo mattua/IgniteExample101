@@ -12,13 +12,7 @@ public class IgniteNodeStartup {
 
     public static void main(String[] args){
 
-
-        System.out.println("Boom");
-
         start();
-
-
-
     }
 
 
