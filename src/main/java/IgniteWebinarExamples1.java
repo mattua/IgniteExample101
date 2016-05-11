@@ -35,12 +35,7 @@ public class IgniteWebinarExamples1 {
         DATAGRID_FAILOVER_AFTER_BASIC,
         DATAGRID_QUERY;
 
-
-
     }
-
-
-
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -71,7 +66,7 @@ public class IgniteWebinarExamples1 {
 
                 IgniteCluster cluster = ignite.cluster();
 
-               IgniteCompute compute = ignite.compute();
+                IgniteCompute compute = ignite.compute();
                 // create a cluster group of all nodes EXCEPT this one
                 // can define group based on attributes or even resource capacity
                 ClusterGroup rmts = cluster.forRemotes();
@@ -119,8 +114,6 @@ public class IgniteWebinarExamples1 {
                     System.out.println("Total: " + sum2);
 
 
-
-
                 }
 
 
@@ -128,11 +121,10 @@ public class IgniteWebinarExamples1 {
             break;
 
 
-
             // closes the local ignite instance
             case SHUTDOWN:
 
-            // start some nodes, then run this to check they shutdown.
+                // start some nodes, then run this to check they shutdown.
             {
 
                 Ignite ignite = IgniteNodeStartup.start();
@@ -145,31 +137,29 @@ public class IgniteWebinarExamples1 {
                 ignite.close();
 
 
-
             }
             break;
 
 
-            case DATAGRID_BASIC:{
+            case DATAGRID_BASIC: {
                 // distributed key value store - replicated and partitioned data
                 // can use SQL queries to query the cache
                 // automatic failover
                 // off heap storage - large memory spaces, avoid crazy GC cycles. Use this if use more than 20Gb heap
 
 
-
                 Ignite ignite = IgniteNodeStartup.start();
 
                 // configuration is distributed through all nodes
-                CacheConfiguration<Integer,String> cfg = new CacheConfiguration<>("webinar");
+                CacheConfiguration<Integer, String> cfg = new CacheConfiguration<>("webinar");
 
 
                 cfg.setBackups(1);
 
                 // check with the cluster to see if there is already a cache with this configuration
-                IgniteCache<Integer,String> cache =ignite.getOrCreateCache(cfg);
+                IgniteCache<Integer, String> cache = ignite.getOrCreateCache(cfg);
 
-                int cnt =10;
+                int cnt = 10;
 
                 for (int k = 0; k < 1000; k++) {
                     Thread.sleep(1000);
@@ -189,23 +179,24 @@ public class IgniteWebinarExamples1 {
                 }
 
 
-            }break;
+            }
+            break;
 
-            case DATAGRID_FAILOVER_AFTER_BASIC:{
+            case DATAGRID_FAILOVER_AFTER_BASIC: {
 
                 Ignite ignite = IgniteNodeStartup.start();
 
 
                 // configuration is distributed through all nodes
-                CacheConfiguration<Integer,String> cfg = new CacheConfiguration<>("webinar");
+                CacheConfiguration<Integer, String> cfg = new CacheConfiguration<>("webinar");
 
 
                 cfg.setBackups(1);
 
                 // check with the cluster to see if there is already a cache with this configuration
-                IgniteCache<Integer,String> cache =ignite.getOrCreateCache(cfg);
+                IgniteCache<Integer, String> cache = ignite.getOrCreateCache(cfg);
 
-                int cnt =10;
+                int cnt = 10;
 
                 for (int k = 0; k < 1000; k++) {
                     Thread.sleep(1000);
@@ -225,9 +216,10 @@ public class IgniteWebinarExamples1 {
                 }
 
 
-            }break;
+            }
+            break;
 
-            case DATAGRID_QUERY:{
+            case DATAGRID_QUERY: {
 
                 Ignition.setClientMode(true);
 
@@ -242,8 +234,6 @@ public class IgniteWebinarExamples1 {
                 CacheConfiguration<Integer, Company> ccfg = new CacheConfiguration<>("companies");
 
 
-
-
                 // We specifiy which types we want to index
 
                 // use affinity key because we dont want persons to be colocated based on person id
@@ -255,8 +245,6 @@ public class IgniteWebinarExamples1 {
                 //create the caches
                 IgniteCache<AffinityKey<Integer>, Person> persons = ignite.getOrCreateCache(pcfg);
                 IgniteCache<Integer, Company> companies = ignite.getOrCreateCache(ccfg);
-
-
 
 
                 populate();
@@ -278,9 +266,9 @@ public class IgniteWebinarExamples1 {
 
 
                 // see how we do join - the companies cache is referenced since we are executing the query against the "persons" cache
-                SqlFieldsQuery qry2 = new SqlFieldsQuery("select model.Person.name, model.Company.name, salary from model.Person,\"companies\".model.Company "+
-                " where model.Person.companyId = model.Company.id " +
-                " and model.Company.name = ?",true);
+                SqlFieldsQuery qry2 = new SqlFieldsQuery("select model.Person.name, model.Company.name, salary from model.Person,\"companies\".model.Company " +
+                        " where model.Person.companyId = model.Company.id " +
+                        " and model.Company.name = ?", true);
 
                 qry2.setArgs("GridGain");
 
@@ -292,17 +280,16 @@ public class IgniteWebinarExamples1 {
 
                 // see how we do aggregations
                 SqlFieldsQuery qry3 = new SqlFieldsQuery(
-                        "select avg(salary) as avgSalary, model.Company.name from model.Person,\"companies\".model.Company "+
-                        " where model.Person.companyId = model.Company.id " +
-                        " group by model.Company.name " +
-                        "order by avgSalary asc",true);
+                        "select avg(salary) as avgSalary, model.Company.name from model.Person,\"companies\".model.Company " +
+                                " where model.Person.companyId = model.Company.id " +
+                                " group by model.Company.name " +
+                                "order by avgSalary asc", true);
 
                 List<List<?>> res3 = persons.query(qry3).getAll();
 
 
-            }break;
-
-
+            }
+            break;
 
 
         }
@@ -311,9 +298,7 @@ public class IgniteWebinarExamples1 {
     }
 
 
-
-
-    private static void populate(){
+    private static void populate() {
 
 
         Ignite ignite = Ignition.ignite();
@@ -323,24 +308,23 @@ public class IgniteWebinarExamples1 {
         IgniteCache<Integer, Company> companies = ignite.getOrCreateCache("companies");
 
 
-        Company c1 = new Company(1,"GridGain");
-        Company c2 = new Company(2,"Other");
+        Company c1 = new Company(1, "GridGain");
+        Company c2 = new Company(2, "Other");
 
-        Person p1 = new Person(1,"Dmitry",1,1000);
-        Person p2 = new Person(2,"Nikita",1,2000);
-        Person p3 = new Person(3,"John",2,3000);
-        Person p4 = new Person(4,"Dave",2,4000);
+        Person p1 = new Person(1, "Dmitry", 1, 1000);
+        Person p2 = new Person(2, "Nikita", 1, 2000);
+        Person p3 = new Person(3, "John", 2, 3000);
+        Person p4 = new Person(4, "Dave", 2, 4000);
 
-        companies.put(c1.getId(),c1);
-        companies.put(c2.getId(),c2);
+        companies.put(c1.getId(), c1);
+        companies.put(c2.getId(), c2);
 
 
         // Affinity key will route the person to the same node on which the country lives
-        persons.put(new AffinityKey<>(p1.getId(),p1.getCompanyId()),p1);
-        persons.put(new AffinityKey<>(p2.getId(),p2.getCompanyId()),p2);
-        persons.put(new AffinityKey<>(p3.getId(),p3.getCompanyId()),p3);
-        persons.put(new AffinityKey<>(p4.getId(),p4.getCompanyId()),p4);
-
+        persons.put(new AffinityKey<>(p1.getId(), p1.getCompanyId()), p1);
+        persons.put(new AffinityKey<>(p2.getId(), p2.getCompanyId()), p2);
+        persons.put(new AffinityKey<>(p3.getId(), p3.getCompanyId()), p3);
+        persons.put(new AffinityKey<>(p4.getId(), p4.getCompanyId()), p4);
 
 
     }

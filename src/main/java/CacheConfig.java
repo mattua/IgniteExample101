@@ -12,17 +12,16 @@ import java.util.concurrent.TimeUnit;
 public class CacheConfig {
 
 
-    public static CacheConfiguration<AffinityUuid,String> wordCache(){
+    public static CacheConfiguration<AffinityUuid, String> wordCache() {
 
-        CacheConfiguration<AffinityUuid,String> cfg = new CacheConfiguration<>("Words");
+        CacheConfiguration<AffinityUuid, String> cfg = new CacheConfiguration<>("Words");
 
 
         // important for SQL queries
-        cfg.setIndexedTypes(AffinityUuid.class,String.class);
+        cfg.setIndexedTypes(AffinityUuid.class, String.class);
 
         // expiration policy of one second
-        cfg.setExpiryPolicyFactory(FactoryBuilder.factoryOf(new CreatedExpiryPolicy(new Duration(TimeUnit.SECONDS,1))));
-
+        cfg.setExpiryPolicyFactory(FactoryBuilder.factoryOf(new CreatedExpiryPolicy(new Duration(TimeUnit.SECONDS, 1))));
 
 
         return cfg;

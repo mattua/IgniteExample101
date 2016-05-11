@@ -17,7 +17,7 @@ import java.io.LineNumberReader;
  */
 
 // Ignite Service method
-public class StreamerServiceImpl implements StreamerService, Service{
+public class StreamerServiceImpl implements StreamerService, Service {
 
 
     private long words;
@@ -29,7 +29,7 @@ public class StreamerServiceImpl implements StreamerService, Service{
     private Ignite ignite;
 
 
-    private IgniteCache<AffinityUuid,String> stmCache;
+    private IgniteCache<AffinityUuid, String> stmCache;
 
     // = ignite.getOrCreateCache(CacheConfig.wordCache());
 
@@ -56,46 +56,42 @@ public class StreamerServiceImpl implements StreamerService, Service{
     public void execute(ServiceContext ctx) throws Exception {
 
 
-            try (IgniteDataStreamer<AffinityUuid, String> stmr = ignite.dataStreamer(stmCache.getName())){
+        try (IgniteDataStreamer<AffinityUuid, String> stmr = ignite.dataStreamer(stmCache.getName())) {
 
-                startTime = System.currentTimeMillis();
+            startTime = System.currentTimeMillis();
 
-                while (!ctx.isCancelled()){
-
-
-                    // make sure the txt file is in the resources folder
-                    InputStream in = StreamWords.class.getResourceAsStream("alice-in-wonderland.txt");
+            while (!ctx.isCancelled()) {
 
 
-                    try (LineNumberReader rdr = new LineNumberReader(new InputStreamReader(in))) {
-
-                        for (String line = rdr.readLine(); line != null; line = rdr.readLine()) {
-                            for (String word : line.split(" ")) {
+                // make sure the txt file is in the resources folder
+                InputStream in = StreamWords.class.getResourceAsStream("alice-in-wonderland.txt");
 
 
-                                if (!word.isEmpty()) {
+                try (LineNumberReader rdr = new LineNumberReader(new InputStreamReader(in))) {
 
-                                    // create a unique key for each word and put it into cache
-                                    // ignite caches work with keys and value
-                                    // we need to make sure identical words go to the same node
+                    for (String line = rdr.readLine(); line != null; line = rdr.readLine()) {
+                        for (String word : line.split(" ")) {
 
-                                    System.out.println(word);
 
-                                    stmr.addData(new AffinityUuid(word), word);
+                            if (!word.isEmpty()) {
 
-                                }
+                                // create a unique key for each word and put it into cache
+                                // ignite caches work with keys and value
+                                // we need to make sure identical words go to the same node
+
+                                System.out.println(word);
+
+                                stmr.addData(new AffinityUuid(word), word);
 
                             }
 
                         }
 
                     }
-                    catch (CacheException e) {
-                        if (!(e.getCause() instanceof IgniteInterruptedException))
+
+                } catch (CacheException e) {
+                    if (!(e.getCause() instanceof IgniteInterruptedException))
                         throw e;
-                    }
-
-
                 }
 
 
@@ -105,14 +101,13 @@ public class StreamerServiceImpl implements StreamerService, Service{
         }
 
 
+    }
+
 
     @Override
     public long getWordsPerSecond() {
 
 
-
-
-
-        return 1000*words/ (System.currentTimeMillis()-startTime);
+        return 1000 * words / (System.currentTimeMillis() - startTime);
     }
 }

@@ -17,6 +17,7 @@
 
 import java.net.URL;
 import java.util.List;
+
 import org.apache.ignite.Ignite;
 import org.apache.ignite.cache.query.annotations.QuerySqlField;
 import org.apache.ignite.cluster.ClusterGroup;
@@ -38,7 +39,7 @@ public class ExamplesUtils {
 
         if (maxMem < .85 * min) {
             System.err.println("Heap limit is too low (" + (maxMem / (1024 * 1024)) +
-                "MB), please increase heap size at least up to " + (min / (1024 * 1024)) + "MB.");
+                    "MB), please increase heap size at least up to " + (min / (1024 * 1024)) + "MB.");
 
             System.exit(-1);
         }
@@ -61,7 +62,7 @@ public class ExamplesUtils {
     /**
      * Checks minimum topology size for running a certain example.
      *
-     * @param grp Cluster to check size for.
+     * @param grp  Cluster to check size for.
      * @param size Minimum number of nodes required to run a certain example.
      * @return {@code True} if check passed, {@code false} otherwise.
      */
@@ -106,7 +107,7 @@ public class ExamplesUtils {
                 if (row instanceof List) {
                     System.out.print("(");
 
-                    List<?> l = (List)row;
+                    List<?> l = (List) row;
 
                     for (int i = 0; i < l.size(); i++) {
                         Object o = l.get(i);
@@ -121,8 +122,7 @@ public class ExamplesUtils {
                     }
 
                     System.out.println(')');
-                }
-                else
+                } else
                     System.out.println("  " + row);
             }
         }

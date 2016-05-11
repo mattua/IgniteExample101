@@ -47,46 +47,38 @@ public class IgniteWebinarExamples2 {
         switch (s) {
 
 
-           case   STREAMER_SINGLETON_SERVICE:{
-            // Prevents this node from participating
-            Ignition.setClientMode(true);
+            case STREAMER_SINGLETON_SERVICE: {
+                // Prevents this node from participating
+                Ignition.setClientMode(true);
 
 
-            //deploy service and exit
+                //deploy service and exit
 
-            try (Ignite ignite = IgniteNodeStartup.start()){
+                try (Ignite ignite = IgniteNodeStartup.start()) {
 
 
-                // dont want service running on client nodes, so pass in a cluster group.
-                IgniteServices svcs = ignite.services(ignite.cluster().forServers());
+                    // dont want service running on client nodes, so pass in a cluster group.
+                    IgniteServices svcs = ignite.services(ignite.cluster().forServers());
 
-                // node since this is a cluster singleton, only one of the server nodes will be running this service
-                // if there are multiple nodes started in the cluster, if one goes down the other one will start
-                // running the service automatically
-                svcs.deployClusterSingleton("wordStreamerService",new StreamerServiceImpl());
+                    // node since this is a cluster singleton, only one of the server nodes will be running this service
+                    // if there are multiple nodes started in the cluster, if one goes down the other one will start
+                    // running the service automatically
+                    svcs.deployClusterSingleton("wordStreamerService", new StreamerServiceImpl());
+
+                }
+
+                // Start and stop server nodes to demo fail over
+                // Run QueryWords to show that the query works exactly as before
+
 
             }
-
-            // Start and stop server nodes to demo fail over
-            // Run QueryWords to show that the query works exactly as before
-
-
-             }break;
-
-
-
-
-
-
-
+            break;
 
 
         }
 
 
     }
-
-
 
 
 }

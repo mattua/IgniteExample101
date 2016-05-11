@@ -21,20 +21,20 @@ public class StreamWords {
 
         try (Ignite ignite = IgniteNodeStartup.start()) {
 
-            if (!ExamplesUtils.hasServerNodes(ignite)){
+            if (!ExamplesUtils.hasServerNodes(ignite)) {
 
                 return;
 
             }
 
 
-            IgniteCache<AffinityUuid,String> stmCache = ignite.getOrCreateCache(CacheConfig.wordCache());
+            IgniteCache<AffinityUuid, String> stmCache = ignite.getOrCreateCache(CacheConfig.wordCache());
 
             // Create a streamer for the cache
 
-            try (IgniteDataStreamer<AffinityUuid, String> stmr = ignite.dataStreamer(stmCache.getName())){
+            try (IgniteDataStreamer<AffinityUuid, String> stmr = ignite.dataStreamer(stmCache.getName())) {
 
-                while (true){
+                while (true) {
 
 
                     // make sure the txt file is in the resources folder
@@ -72,11 +72,7 @@ public class StreamWords {
                     }
 
 
-
-
-
                 }
-
 
 
             }
@@ -85,18 +81,7 @@ public class StreamWords {
         }
 
 
-
-
-
-
-
     }
-
-
-
-
-
-
 
 
 }

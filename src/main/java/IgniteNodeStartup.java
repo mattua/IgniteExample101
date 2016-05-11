@@ -10,13 +10,13 @@ import org.apache.ignite.configuration.IgniteConfiguration;
 public class IgniteNodeStartup {
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         start();
     }
 
 
-    public static Ignite start(){
+    public static Ignite start() {
 
         IgniteConfiguration config = new IgniteConfiguration();
 

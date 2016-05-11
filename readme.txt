@@ -5,28 +5,21 @@ This code is already available in the git samples folder but wanted to put it
 in a no-brainer input, ready to run, and also structured precisely around
 the content of the two Webinar code walkthroughs below by the co-founder of Gridgain Dmitriy Setrakyan
 
-____________________________________________________________________
-SUGGESTED APPROACH
-
--watch the videos below
-
-
-
-_______________________________________________________________________
-MATERIAL
-
-
-These are the working examples from the following 2 part tutorial.
-I've tried to organise them so you can run specific scenarios without
-changing/commenting any code - for now just using a switched enum
 
 https://www.youtube.com/watch?v=4CQalha3MyY
 https://www.youtube.com/watch?v=wpCeIz0oEPY
+____________________________________________________________________
+SUGGESTED APPROACH
+
+-watch the videos above in the back ground and follow instructions on each session
+    which closely follow the videos
+
 
 ______________________________________________________________________
 PROJECT IMPORT: TESTED ON INTELLIJ, SHOULD BE IDENTICAL ON ECLIPSE
 
--Git project only contains maven skeleton
+-Git project only contains maven skeleton -> src, resources, pom
+
 1. Intellij > new project from version control > import from github
 2. Project will be picked up as maven project and libraries and project settings file created
     -no need to add these to git when prompted
@@ -60,8 +53,6 @@ SESSION 1 EXAMPLES
 
 Once you have started a few nodes, run the IgniteWebinarExamples1 class, changing the
 selected scenario per the switch statement.
-
-
 
 ________________________________________________________________________
 SESSION 2

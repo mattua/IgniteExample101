@@ -4,8 +4,7 @@
 public interface StreamerService {
 
 
-public long getWordsPerSecond();
-
+    public long getWordsPerSecond();
 
 
 }
