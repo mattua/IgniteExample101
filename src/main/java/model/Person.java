@@ -38,7 +38,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "ExamplesUtils.Person{" +
+        return "util.ExamplesUtils.Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", companyId=" + companyId +

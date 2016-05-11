@@ -1,3 +1,5 @@
+package session2;
+
 import org.apache.ignite.cache.affinity.AffinityUuid;
 import org.apache.ignite.configuration.CacheConfiguration;
 

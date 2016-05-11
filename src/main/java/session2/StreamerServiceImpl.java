@@ -1,3 +1,5 @@
+package session2;
+
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.IgniteDataStreamer;
@@ -6,6 +8,8 @@ import org.apache.ignite.cache.affinity.AffinityUuid;
 import org.apache.ignite.resources.IgniteInstanceResource;
 import org.apache.ignite.services.Service;
 import org.apache.ignite.services.ServiceContext;
+import session2.StreamWords;
+import session2.StreamerService;
 
 import javax.cache.CacheException;
 import java.io.InputStream;
@@ -31,7 +35,7 @@ public class StreamerServiceImpl implements StreamerService, Service {
 
     private IgniteCache<AffinityUuid, String> stmCache;
 
-    // = ignite.getOrCreateCache(CacheConfig.wordCache());
+    // = ignite.getOrCreateCache(session2.CacheConfig.wordCache());
 
     //
     @Override

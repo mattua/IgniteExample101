@@ -1,8 +1,12 @@
+package session2;
+
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.affinity.AffinityUuid;
 import org.apache.ignite.cache.query.SqlFieldsQuery;
+import util.ExamplesUtils;
+import util.IgniteNodeStartup;
 
 import java.util.List;
 

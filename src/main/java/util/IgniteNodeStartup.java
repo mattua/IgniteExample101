@@ -1,3 +1,5 @@
+package util;
+
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCompute;
 import org.apache.ignite.Ignition;

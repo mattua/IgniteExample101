@@ -51,7 +51,7 @@ This will create basic server nodes (Ignite instances)
 _______________________________________________________________________
 SESSION 1 EXAMPLES
 
-Once you have started a few nodes, run the IgniteWebinarExamples1 class, changing the
+Once you have started a few nodes, run the session1.IgniteWebinarExamples1 class, changing the
 selected scenario per the switch statement.
 
 ________________________________________________________________________
@@ -63,16 +63,17 @@ This is mostly about streaming and requires the following to be run sequentially
     cluster as you want.
 
 
-2) Run "StreamWords" class - this will populate an Ignite cache by reading in the lines of the "Alice In Wonderland"
+2) Run "session2.StreamWords" class - this will populate an Ignite cache by reading in the lines of the "Alice In Wonderland"
     story and streaming the words one by one into the shared Ignite cache - a cache which is configured with a time to
     life of 1 second, so it will be a sliding window of every word streamed in the last 1 second
 
-3) Run "QueryWords" class to query the contents of this cache in real time in SQL like syntax- and do some analytics
+3) Run "session2.QueryWords" class to query the contents of this cache in real time in SQL like syntax- and do some analytics
 
     At various points these examples you should play around with shutting down some nodes and observing the instant
     failover.
 
 
+4) Shut down everything and run
 
 
 

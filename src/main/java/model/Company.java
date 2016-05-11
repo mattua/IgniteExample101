@@ -31,7 +31,7 @@ public class Company {
     @Override
     public String toString(){
 
-        return "ExamplesUtils.Company [id="+id+", name="+name+" ]";
+        return "util.ExamplesUtils.Company [id="+id+", name="+name+" ]";
     }
 
 

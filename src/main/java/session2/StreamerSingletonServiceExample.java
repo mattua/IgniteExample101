@@ -1,21 +1,15 @@
-
+package session2;
 
 import org.apache.ignite.*;
-import org.apache.ignite.cache.affinity.AffinityKey;
-import org.apache.ignite.cache.query.SqlFieldsQuery;
-import org.apache.ignite.cache.query.SqlQuery;
-import org.apache.ignite.cluster.ClusterGroup;
-import org.apache.ignite.configuration.CacheConfiguration;
+import session2.StreamerServiceImpl;
+import util.IgniteNodeStartup;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by mattua on 13/04/2016.
  */
-public class IgniteWebinarExamples2 {
+public class StreamerSingletonServiceExample {
 
 
     //from this video: part 1 https://www.youtube.com/watch?v=4CQalha3MyY
@@ -68,7 +62,7 @@ public class IgniteWebinarExamples2 {
                 }
 
                 // Start and stop server nodes to demo fail over
-                // Run QueryWords to show that the query works exactly as before
+                // Run session2.QueryWords to show that the query works exactly as before
 
 
             }

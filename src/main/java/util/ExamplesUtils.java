@@ -1,4 +1,4 @@
-/*
+package util;/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -19,7 +19,6 @@ import java.net.URL;
 import java.util.List;
 
 import org.apache.ignite.Ignite;
-import org.apache.ignite.cache.query.annotations.QuerySqlField;
 import org.apache.ignite.cluster.ClusterGroup;
 
 /**

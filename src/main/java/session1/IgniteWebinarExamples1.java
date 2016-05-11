@@ -1,4 +1,4 @@
-
+package session1;
 
 import model.Company;
 import model.Person;
@@ -8,6 +8,7 @@ import org.apache.ignite.cache.query.SqlFieldsQuery;
 import org.apache.ignite.cache.query.SqlQuery;
 import org.apache.ignite.cluster.ClusterGroup;
 import org.apache.ignite.configuration.CacheConfiguration;
+import util.IgniteNodeStartup;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,6 +17,8 @@ import java.util.List;
 /**
  * Created by mattua on 13/04/2016.
  */
+
+
 public class IgniteWebinarExamples1 {
 
 
