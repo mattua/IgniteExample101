@@ -71,16 +71,13 @@ public class IgniteWebinarExamples1 {
 
                 IgniteCluster cluster = ignite.cluster();
 
-
-
-                IgniteCompute compute = ignite.compute();
+               IgniteCompute compute = ignite.compute();
                 // create a cluster group of all nodes EXCEPT this one
                 // can define group based on attributes or even resource capacity
                 ClusterGroup rmts = cluster.forRemotes();
 
                 // Metrics can be defined across cluster
                 //rmts.metrics();
-
                 compute = ignite.compute(rmts);
 
                 compute.broadcast(() -> System.out.println("hello remotes"));
