@@ -43,8 +43,9 @@ Get this Error -> javacTask: source release 8 requires target release 1.8
 ____________________________________________________________________
 ECLIPSE
 
-
-
+1)	Download zip, extract in workspace.
+2)	Import as maven project.
+3)	In case project is not using java 8 and showing compilation error : Right click on project >> properties >> java compiler >> set compiler compliance level to 1.8
 
 ______________________________________________________________________
 GETTING STARTED
