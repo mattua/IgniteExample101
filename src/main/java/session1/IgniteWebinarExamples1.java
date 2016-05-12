@@ -44,7 +44,7 @@ public class IgniteWebinarExamples1 {
 
 
         // comment
-        Scenario s = Scenario.BASIC;
+        Scenario s = Scenario.DATAGRID_BASIC;
 
         switch (s) {
 
@@ -144,11 +144,12 @@ public class IgniteWebinarExamples1 {
             break;
 
 
+            /*
+            Run this one with only one other node running
+
+
+             */
             case DATAGRID_BASIC: {
-                // distributed key value store - replicated and partitioned data
-                // can use SQL queries to query the cache
-                // automatic failover
-                // off heap storage - large memory spaces, avoid crazy GC cycles. Use this if use more than 20Gb heap
 
 
                 Ignite ignite = IgniteNodeStartup.start();
