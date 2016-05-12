@@ -14,20 +14,21 @@ SUGGESTED APPROACH
 -watch the videos above in the back ground and follow instructions on each session
     which closely follow the videos
 
+________________________________________________________________________
+PREREQUISITES
 
+Java 8 is installed, required for Ignite
 ______________________________________________________________________
-PROJECT IMPORT: TESTED ON INTELLIJ, SHOULD BE IDENTICAL ON ECLIPSE
+INTELLIJ SETUP
 
--Git project only contains maven skeleton -> src, resources, pom
+https://github.com/mattua/IgniteExample101.git
+
+-Self-contained Git project only contains maven skeleton -> src, resources, pom
+-Ignite is just a set of libraries pulled in from maven via the pom
 
 1. Intellij > new project from version control > import from github
 2. Project will be picked up as maven project and libraries and project settings file created
     -no need to add these to git when prompted
-
--make sure Java 8 is installed, required for Ignite
-
-____________________________________________________________________
-PROJECT SETTINGS
 
 A few different settings are required for 1.8 Java
 
@@ -37,6 +38,12 @@ A few different settings are required for 1.8 Java
 
 Get this Error -> javacTask: source release 8 requires target release 1.8
 - IDEA > Preferences > Build/Execution/Deployment > Compiler > Java compiler > locate the module in the list and set the target to 1.8
+
+
+____________________________________________________________________
+ECLIPSE
+
+
 
 
 ______________________________________________________________________
