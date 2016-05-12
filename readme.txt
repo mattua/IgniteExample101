@@ -43,7 +43,9 @@ Get this Error -> javacTask: source release 8 requires target release 1.8
 ____________________________________________________________________
 ECLIPSE
 
-1)	Download zip, extract in workspace.
+https://github.com/mattua/IgniteExample101
+
+1)	Download zip from the webpage https://github.com/mattua/IgniteExample101, extract in workspace.
 2)	Import as maven project.
 3)	In case project is not using java 8 and showing compilation error : Right click on project >> properties >> java compiler >> set compiler compliance level to 1.8
 
@@ -79,9 +81,6 @@ This is mostly about streaming and requires the following to be run sequentially
 
     At various points these examples you should play around with shutting down some nodes and observing the instant
     failover.
-
-
-4) Shut down everything and run
 
 
 
