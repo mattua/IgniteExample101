@@ -1,8 +1,8 @@
 _____________________________________________________________________
 AIM
 
-This code is already available in the git samples folder but wanted to put it
-in a no-brainer input, ready to run, and also structured precisely around
+This code is already available in the Ignite samples folder but wanted to put it
+in a ready to run way and also structured precisely around
 the content of the two Webinar code walkthroughs below by the co-founder of Gridgain Dmitriy Setrakyan
 
 
