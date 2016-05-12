@@ -41,7 +41,7 @@ public class StreamWords {
 
 
                     // make sure the txt file is in the resources folder
-                    InputStream in = StreamWords.class.getResourceAsStream("alice-in-wonderland.txt");
+                    InputStream in = StreamWords.class.getResourceAsStream("/alice-in-wonderland.txt");
 
 
                     try (LineNumberReader rdr = new LineNumberReader(new InputStreamReader(in))) {
