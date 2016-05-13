@@ -59,13 +59,13 @@ This will create basic server nodes (Ignite instances)
 
 
 _______________________________________________________________________
-SESSION 1 EXAMPLES
+SESSION 1: all instructions inline in the source code
 
 Once you have started a few nodes, run the session1.IgniteWebinarExamples1 class, changing the
 selected scenario per the switch statement.
 
 ________________________________________________________________________
-SESSION 2
+SESSION 2: follow the steps below
 
 This is mostly about streaming and requires the following to be run sequentially
 
@@ -91,10 +91,28 @@ This is mostly about streaming and requires the following to be run sequentially
     We need a way to have a backup in case the actual streamer goes down - that's where the next
     exmaple comes into play
 
-4) Run "session2.StreamerSingletonServiceExample"
+4) Deploy service as Cluster Singleton
 
-    We have basically wrapped up the previous Streamer functionality into a service/impl and deployed that service
-    object into the Ignite cluster as a singleton.
+     We have basically wrapped up the previous Streamer functionality into a service/impl and deployed that service
+     object into the Ignite cluster as a singleton.
+
+    a) make sure you have some background server nodes running (at least 2)
+    b) Run "session2.StreamerSingletonServiceExample"
+           this deploy (and auto executes) the service impl object to one of the cluster nodes
+
+           Remember, it's a cluster singleton so there is only once instance running per cluster
+
+    c) observe that in one of the server nodes you will see the streamed output
+    d) Shutdown the node which is currently streaming
+    e) Observe that the service will resume on the other node
+    f) Notice that the service will never run on the StreamerSingletonServiceExample node
+        since it is defined as a "client node"  >  Ignition.setClientMode(true);
+
+    g) Run the same QueryWords class from before to see that the same cache is now being
+        populated by the Cluster singleton services and view SQL generated stats on the
+        current contents of the cache
+
+
 
 
 
