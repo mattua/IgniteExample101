@@ -79,10 +79,22 @@ This is mostly about streaming and requires the following to be run sequentially
 
 3) Run "session2.QueryWords" class to query the contents of this cache in real time in SQL like syntax- and do some analytics
 
-    At various points these examples you should play around with shutting down some nodes and observing the instant
-    failover.
+    a) MAKE SURE session2.StreamWords is running in the background (2) streaming words into the cache in
+    real time with a 1 second time to expiry
 
+    b) After a while, shutdown the session2.StreamWords instance - you should see that the streaming
+    stops and almost immediately, the QueryResults window shows no contents - almost immediately all
+    the contents of the cache have expired and there are no new entries coming in
 
+    You should see "Query result set is empty."
+
+    We need a way to have a backup in case the actual streamer goes down - that's where the next
+    exmaple comes into play
+
+4) Run "session2.StreamerSingletonServiceExample"
+
+    We have basically wrapped up the previous Streamer functionality into a service/impl and deployed that service
+    object into the Ignite cluster as a singleton.
 
 
 
