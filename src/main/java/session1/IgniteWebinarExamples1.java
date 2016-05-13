@@ -8,6 +8,7 @@ import org.apache.ignite.cache.query.SqlFieldsQuery;
 import org.apache.ignite.cache.query.SqlQuery;
 import org.apache.ignite.cluster.ClusterGroup;
 import org.apache.ignite.configuration.CacheConfiguration;
+import util.ExamplesUtils;
 import util.IgniteNodeStartup;
 
 import java.util.Arrays;
@@ -365,6 +366,7 @@ public class IgniteWebinarExamples1 {
 
                 List<List<?>> res3 = persons.query(qry3).getAll();
 
+                ExamplesUtils.printQueryResults(res3);
 
             }
             break;
