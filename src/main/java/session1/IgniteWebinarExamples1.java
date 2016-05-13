@@ -40,35 +40,26 @@ public class IgniteWebinarExamples1 {
 
     }
 
-    /*
-
-        Best to restart all nodes before changing the scenario
-
-     */
-
-
-
     public static void main(String[] args) throws InterruptedException {
 
 
-        // comment
-        Scenario s = Scenario.COUNT_WORDS_RESILIENT_COMPUTE;
+        Scenario s = Scenario.DATAGRID_QUERY;
 
         switch (s) {
 
             /**************************************************************************
 
-                1)
+             1)
 
-                Make sure you run a few instances of IgniteNodeStartup in the background
+             Make sure you run a few instances of IgniteNodeStartup in the background
 
-                This will start another instance within this JVM, get an instance to the
-                Ignite cluster instance (representing all running nodes)
+             This will start another instance within this JVM, get an instance to the
+             Ignite cluster instance (representing all running nodes)
 
-                Then it will broadcast a simple closure to each node (each
-                instance of IgniteNodeStartup application
+             Then it will broadcast a simple closure to each node (each
+             instance of IgniteNodeStartup application
 
-                See this message in the console window of each
+             See this message in the console window of each
 
              */
             case BASIC:
@@ -95,7 +86,7 @@ public class IgniteWebinarExamples1 {
                 The clustergroup concept can be extended to nodes of any properties
                 even determined at runtime by current server load for load balancing
              */
-           case REMOTES:
+            case REMOTES:
 
             {
                 Ignite ignite = IgniteNodeStartup.start();
@@ -117,7 +108,7 @@ public class IgniteWebinarExamples1 {
             }
             break;
            /*-----------------------------------------------------------------------------
-             2) COUNT_WORDS_RESILIENT_COMPUTE
+             3) COUNT_WORDS_RESILIENT_COMPUTE
 
                 a) START TWO instances of IgniteNodeStartUp (server nodes) (+ this one)
 
@@ -141,8 +132,7 @@ public class IgniteWebinarExamples1 {
                 See that it rejoins and load is once again distributed across the 3 nodes
 
              */
-            case COUNT_WORDS_RESILIENT_COMPUTE:
-            {
+            case COUNT_WORDS_RESILIENT_COMPUTE: {
 
                 Ignite ignite = IgniteNodeStartup.start();
 
@@ -179,15 +169,14 @@ public class IgniteWebinarExamples1 {
             }
             break;
             /*-----------------------------------------------------------------------------
-             2) SHUTDOWN
+             4) SHUTDOWN
 
                 Demo of how to shutdown all the cluster nodes from this node
 
                 start some nodes, then run this to check they shutdown
 
              */
-            case SHUTDOWN:
-             {
+            case SHUTDOWN: {
 
                 Ignite ignite = IgniteNodeStartup.start();
 
@@ -202,30 +191,36 @@ public class IgniteWebinarExamples1 {
             break;
 
             /*-----------------------------------------------------------------------------
-             2) DATAGRID_BASIC
+             5) DATAGRID_BASIC
 
-                Demo of how to shutdown all the cluster nodes from this node
+                Distributed key values store - can be partitioned or replicated or both
+                Can run SQL on top of this - fields are columns and classes are tables
 
-                start some nodes, then run this to check they shutdown
+               Very simple demonstration of creating a cache instance and populating and
+               retrieving some values.
+
+
+               a) Run this case then SHUTDOWN the application but KEEP THE BACKGROUND NODES RUNNING,
+               run the next case DATAGRID_FAILOVER_AFTER_BASIC
 
              */
             case DATAGRID_BASIC: {
-
 
                 Ignite ignite = IgniteNodeStartup.start();
 
                 // configuration is distributed through all nodes
                 CacheConfiguration<Integer, String> cfg = new CacheConfiguration<>("webinar");
 
-
+                //Configure one backup
                 cfg.setBackups(1);
 
-                // check with the cluster to see if there is already a cache with this configuration
+                // check with the cluster to see if there is already a cache with this configuration in the cluster
                 IgniteCache<Integer, String> cache = ignite.getOrCreateCache(cfg);
 
                 int cnt = 10;
 
                 for (int k = 0; k < 1000; k++) {
+
                     Thread.sleep(1000);
 
                     // populate keys into the cache
@@ -245,7 +240,20 @@ public class IgniteWebinarExamples1 {
 
             }
             break;
+            /*-----------------------------------------------------------------------------
+             6) DATAGRID_FAILOVER_AFTER_DATAGRID_BASIC
 
+                a) Make sure you have run (and shutdown) the previous case and kept the background nodes running
+
+                This time we don't populate anything in the cache, but we rely on the fact that we
+                know we had at least one back up configured
+
+                b) check that values are being retrieved from the cache and printed to the screen
+
+                c) Now shutdown one of the background nodes (IgniteNodeStartup)
+                Observe that Ignite cache lives on due to the configured back up - we
+                should still be retrieving all the values from the cache in the background
+             */
             case DATAGRID_FAILOVER_AFTER_BASIC: {
 
                 Ignite ignite = IgniteNodeStartup.start();
@@ -265,9 +273,6 @@ public class IgniteWebinarExamples1 {
                 for (int k = 0; k < 1000; k++) {
                     Thread.sleep(1000);
 
-                    // THIS TIME DONT PUT VALUES IN THE CACHE, BUT CHECK IF THEY ARE STILL THERE
-                    // MAKE SURE THE OTHER NODES ARE STILL RUNNING
-                    // MAKE SURE YOU RUN PREVIOUS SCENARIO FIRST
 
                     // See that the values are still retrieved from the other nodes
 
@@ -282,7 +287,18 @@ public class IgniteWebinarExamples1 {
 
             }
             break;
+            /*-----------------------------------------------------------------------------
+             7) DATAGRID_QUERY
 
+                Create some simple java objects - Person/Company which are "joined" by a
+                person.companyId relationship.
+
+                Key concept of AffinityKey meaning that Ignite will ensure that all Person objects
+                will be stored on the same node as the corresponding Company object. Makes joins
+                much quicker.
+
+              a) make sure your server nodes are running
+             */
             case DATAGRID_QUERY: {
 
                 Ignition.setClientMode(true);
@@ -302,7 +318,6 @@ public class IgniteWebinarExamples1 {
 
                 // use affinity key because we dont want persons to be colocated based on person id
                 // rather we want to colocate via company id
-
                 pcfg.setIndexedTypes(AffinityKey.class, Person.class);
                 ccfg.setIndexedTypes(Integer.class, Company.class);
 
@@ -310,13 +325,12 @@ public class IgniteWebinarExamples1 {
                 IgniteCache<AffinityKey<Integer>, Person> persons = ignite.getOrCreateCache(pcfg);
                 IgniteCache<Integer, Company> companies = ignite.getOrCreateCache(ccfg);
 
-
+                // Populate some objects in the distributed cache
                 populate();
 
 
                 // now lets run some select statements
-
-                SqlQuery<AffinityKey<Integer>, Person> qry1 = new SqlQuery<>(Person.class, "select * from model.Person where salary < ?");
+                SqlQuery<AffinityKey<Integer>, Person> qry1 = new SqlQuery<>(Person.class, "select * from Person where salary < ?");
 
                 int salary = 3000;
                 qry1.setArgs(salary);
@@ -330,9 +344,9 @@ public class IgniteWebinarExamples1 {
 
 
                 // see how we do join - the companies cache is referenced since we are executing the query against the "persons" cache
-                SqlFieldsQuery qry2 = new SqlFieldsQuery("select model.Person.name, model.Company.name, salary from model.Person,\"companies\".model.Company " +
-                        " where model.Person.companyId = model.Company.id " +
-                        " and model.Company.name = ?", true);
+                SqlFieldsQuery qry2 = new SqlFieldsQuery("select Person.name, Company.name, salary from Person,\"companies\".Company " +
+                        " where Person.companyId = Company.id " +
+                        " and Company.name = ?", true);
 
                 qry2.setArgs("GridGain");
 
@@ -344,9 +358,9 @@ public class IgniteWebinarExamples1 {
 
                 // see how we do aggregations
                 SqlFieldsQuery qry3 = new SqlFieldsQuery(
-                        "select avg(salary) as avgSalary, model.Company.name from model.Person,\"companies\".model.Company " +
-                                " where model.Person.companyId = model.Company.id " +
-                                " group by model.Company.name " +
+                        "select avg(salary) as avgSalary, Company.name from Person,\"companies\".Company " +
+                                " where Person.companyId = Company.id " +
+                                " group by Company.name " +
                                 "order by avgSalary asc", true);
 
                 List<List<?>> res3 = persons.query(qry3).getAll();
