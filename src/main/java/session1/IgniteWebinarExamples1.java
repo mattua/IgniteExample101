@@ -32,7 +32,7 @@ public class IgniteWebinarExamples1 {
 
         BASIC,
         REMOTES,
-        RESILIENT_COMPUTE,
+        COUNT_WORDS_RESILIENT_COMPUTE,
         SHUTDOWN,
         DATAGRID_BASIC,
         DATAGRID_FAILOVER_AFTER_BASIC,
@@ -40,15 +40,37 @@ public class IgniteWebinarExamples1 {
 
     }
 
+    /*
+
+        Best to restart all nodes before changing the scenario
+
+     */
+
+
+
     public static void main(String[] args) throws InterruptedException {
 
 
         // comment
-        Scenario s = Scenario.DATAGRID_BASIC;
+        Scenario s = Scenario.COUNT_WORDS_RESILIENT_COMPUTE;
 
         switch (s) {
 
+            /**************************************************************************
 
+                1)
+
+                Make sure you run a few instances of IgniteNodeStartup in the background
+
+                This will start another instance within this JVM, get an instance to the
+                Ignite cluster instance (representing all running nodes)
+
+                Then it will broadcast a simple closure to each node (each
+                instance of IgniteNodeStartup application
+
+                See this message in the console window of each
+
+             */
             case BASIC:
 
             {
@@ -62,7 +84,18 @@ public class IgniteWebinarExamples1 {
 
             }
             break;
-            case REMOTES:
+            /*-----------------------------------------------------------------------------
+            2) REMOTES
+
+                Again get a reference to the shared Ignite cluster
+                Create a cluster group representing only the remote
+                nodes (i.e. not including the node running in this
+                particular JVM
+
+                The clustergroup concept can be extended to nodes of any properties
+                even determined at runtime by current server load for load balancing
+             */
+           case REMOTES:
 
             {
                 Ignite ignite = IgniteNodeStartup.start();
@@ -83,16 +116,32 @@ public class IgniteWebinarExamples1 {
 
             }
             break;
-            case RESILIENT_COMPUTE:
+           /*-----------------------------------------------------------------------------
+             2) COUNT_WORDS_RESILIENT_COMPUTE
 
-                // Ignite will look at the number of parameters (second argument) in this case words
-                // and clone the closure that number of times and distribute according to its own
-                // internal load balancing
+                a) START TWO instances of IgniteNodeStartUp (server nodes) (+ this one)
 
-                // shows fault tolerance
-                // shut down a node during this loop and observe that it fails over to the other node
-                // start up other nodes and watch them join the party
+                Ignite will look at the number of parameters (second argument) in this case words
+                and clone the closure that number of times and distribute according to its own
+                internal load balancing
 
+                b) see in the console how each of the 3 instances is executing its own word
+                repeatedly
+
+                c) KILL one of the background nodes
+
+                shows fault tolerance
+                shut down a node during this loop and observe that it fails over to the other node
+                start up other nodes and watch them join the party
+
+                See that the load has now been balanced between the remaining two nodes and
+                most importantly that the letter count in the total aggregated sentence is still 17
+
+                d) Start another background server node (IgniteNodeStartup)
+                See that it rejoins and load is once again distributed across the 3 nodes
+
+             */
+            case COUNT_WORDS_RESILIENT_COMPUTE:
             {
 
                 Ignite ignite = IgniteNodeStartup.start();
@@ -102,8 +151,15 @@ public class IgniteWebinarExamples1 {
 
                     int k = 1;
 
-                    Collection<Integer> res2 = ignite.compute().apply(
+                    // Java 8 syntax
 
+                    // send this closure to all nodes - each instance of the
+                    // closure processes one node and the closure count the
+                    // number of characters and returns
+
+                    // Then we sum the total once all the closures have returned
+                    // their counts back
+                    Collection<Integer> res2 = ignite.compute().apply(
 
                             (String w) -> {
                                 System.out.println("Counting: " + w);
@@ -122,13 +178,16 @@ public class IgniteWebinarExamples1 {
 
             }
             break;
+            /*-----------------------------------------------------------------------------
+             2) SHUTDOWN
 
+                Demo of how to shutdown all the cluster nodes from this node
 
-            // closes the local ignite instance
+                start some nodes, then run this to check they shutdown
+
+             */
             case SHUTDOWN:
-
-                // start some nodes, then run this to check they shutdown.
-            {
+             {
 
                 Ignite ignite = IgniteNodeStartup.start();
 
@@ -136,17 +195,18 @@ public class IgniteWebinarExamples1 {
 
                 cluster.stopNodes();
 
-                System.out.println("Boom");
                 ignite.close();
 
 
             }
             break;
 
+            /*-----------------------------------------------------------------------------
+             2) DATAGRID_BASIC
 
-            /*
-            Run this one with only one other node running
+                Demo of how to shutdown all the cluster nodes from this node
 
+                start some nodes, then run this to check they shutdown
 
              */
             case DATAGRID_BASIC: {
