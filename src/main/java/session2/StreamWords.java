@@ -18,19 +18,26 @@ import java.io.LineNumberReader;
  */
 public class StreamWords {
 
+    /*
+
+    Streaming is essentially about injection large amounts of data into Ignite caches
+    Can work with finite or continuous data sources
+
+    */
+
     public static void main(String[] args) throws IOException {
 
         Ignition.setClientMode(true);
 
         try (Ignite ignite = IgniteNodeStartup.start()) {
 
-            if (!ExamplesUtils.hasServerNodes(ignite)) {
+             if (!ExamplesUtils.hasServerNodes(ignite)) {
 
                 return;
 
             }
 
-
+            // CacheConfig defines Type and lifetime config
             IgniteCache<AffinityUuid, String> stmCache = ignite.getOrCreateCache(CacheConfig.wordCache());
 
             // Create a streamer for the cache
@@ -43,7 +50,9 @@ public class StreamWords {
                     // make sure the txt file is in the resources folder
                     InputStream in = StreamWords.class.getResourceAsStream("/alice-in-wonderland.txt");
 
-
+                    /*
+                    Read book line by line and stream each word into the cache
+                     */
                     try (LineNumberReader rdr = new LineNumberReader(new InputStreamReader(in))) {
 
                         for (String line = rdr.readLine(); line != null; line = rdr.readLine()) {
