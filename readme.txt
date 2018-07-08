@@ -39,6 +39,7 @@ A few different settings are required for 1.8 Java
 Get this Error -> javacTask: source release 8 requires target release 1.8
 - IDEA > Preferences > Build/Execution/Deployment > Compiler > Java compiler > locate the module in the list and set the target to 1.8
 
+Also - might be necessary to remove the secondary "Main" module - the only module should be IgniteExample101
 
 ____________________________________________________________________
 ECLIPSE
